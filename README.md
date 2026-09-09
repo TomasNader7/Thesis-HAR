@@ -16,6 +16,7 @@ data/       NOT checked in -- raw + regenerated intermediate data (see "Data")
 results/    small result artifacts (metrics, confusion matrices, reports) for phase1/phase2/phase3
 tables/     master_table.csv -- consolidated phase3 results table
 figures/    KS-statistic distribution-shift plots/tables (phase2)
+reference/  CATA 2025 single-dataset paper code/figures -- background, not part of the pipeline
 ```
 
 ## Data
@@ -113,20 +114,24 @@ re-run everything to see the numbers, only to reproduce or extend them.
   or a copy/paste bug to fix) before the phase1 results produced by this
   script are treated as final.
 
+## Related work (reference only, not part of this pipeline)
+
+`reference/cata2025/` holds `Human_Activity_Recognition.py` (a stacking +
+CNN model on the single-dataset UCI HAR problem, no cross-dataset transfer)
+plus its result figures, behind the separate, already-published undergrad
+paper *"Human Activity Recognition using an Ensemble Learning Approach"*
+(CATA 2025, Nader/Murad/Rahimi). Same stacking architecture as this thesis,
+applied to an easier single-dataset setting -- useful background/methodology
+context, not something this pipeline runs or depends on. Note: the figures
+under `reference/cata2025/cross_val_results/` and `figures/` weren't
+regenerable from any script found in the old repo during migration, so
+treat them as archival images rather than reproducible artifacts.
+
 ## Excluded from this repo
 
 - **`cross_dataset_eval.py`** -- confirmed dead code. It repeats an old,
   already-fixed bug (a 561-feature-to-61-feature `SelectKBest` mismatch) and
   is not part of the current working pipeline. Deliberately not migrated.
-- **CATA 2025 single-dataset paper code** (`Human_Activity_Recognition.py`,
-  a stacking + CNN model on the single UCI HAR dataset, published at
-  [CATA 2025](https://www.nwmissouri.edu/csis/CATA2025/index.htm)) is
-  mentioned here for context but was left out of this migration. It has no
-  code-level import dependency on the cross-dataset scripts, but its
-  companion result artifacts in the old repo (`Cross_val_results/`,
-  `Figure_1.png`-`Figure_4.png` at the old repo root) aren't produced by any
-  script that could be found in the old repo, so their provenance couldn't
-  be verified -- they were left behind rather than migrated speculatively.
 - Large regenerated feature-matrix dumps (`Filtered_datasets_and_KS_results/`,
   `hapt_3class_output_phase2/`, `wisdm_phase2/`, loose `X_wisdm.txt` /
   `wisdm_features_normalized.csv`, etc. -- several hundred MB combined) are
