@@ -1,0 +1,32 @@
+# Raw datasets (source separately from UCI/WISDM -- see README "Data" section)
+data/raw/
+data/interim/
+
+# Large regenerated feature-matrix dumps (hundreds of MB, not source-controlled)
+Filtered_datasets_and_KS_results/
+hapt_3class_output/
+hapt_3class_output_phase2/
+wisdm_phase2/
+X_wisdm.txt
+y_wisdm.txt
+subject_wisdm.txt
+wisdm_features_normalized.csv
+Stage3_cross_val_Results/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
