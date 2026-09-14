@@ -103,16 +103,14 @@ re-run everything to see the numbers, only to reproduce or extend them.
 
 ## Known open questions
 
-- **Stack-of-a-stack meta-learner in `cross_dataset_hapt_to_wisdm.py`.**
-  `get_advanced_stacking_model()` (around the `level0`/`level1` block) builds
-  a `StackingClassifier` as the meta-learner, then wraps *that* in a second,
-  outer `StackingClassifier` using the same base learners -- i.e. a
-  stack-of-a-stack, not the "5 base learners + 1 logistic-regression
-  meta-learner" architecture described in the thesis text. This is flagged
-  with a `# TODO(verify):` comment at the exact spot in the file. It has
-  **not** been resolved -- it needs a decision (intentional deeper ensemble,
-  or a copy/paste bug to fix) before the phase1 results produced by this
-  script are treated as final.
+- **Stack-of-a-stack meta-learner in `cross_dataset_hapt_to_wisdm.py` -- fixed.**
+  `get_advanced_stacking_model()` previously built a `StackingClassifier` as
+  the meta-learner, then wrapped *that* in a second, outer
+  `StackingClassifier` using the same base learners -- a stack-of-a-stack,
+  not the "5 base learners + 1 logistic-regression meta-learner" architecture
+  described in the thesis text. Confirmed as a copy/paste bug by Dr. Rahimi
+  and fixed to single-level stacking, matching the original CATA 2025
+  architecture in `reference/cata2025/Human_Activity_Recognition.py`.
 
 ## Related work (reference only, not part of this pipeline)
 

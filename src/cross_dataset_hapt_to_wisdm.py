@@ -83,16 +83,9 @@ def get_advanced_stacking_model():
     ]
     level1 = LogisticRegression(solver='saga', max_iter=2000, tol=1e-4, class_weight='balanced', random_state=42)
 
-    # TODO(verify): This wraps `level1` in a StackingClassifier (using the SAME
-    # level0 base learners) and then wraps THAT StackingClassifier again as the
-    # final_estimator of an outer StackingClassifier below -- i.e. a stack-of-a-stack,
-    # not the "5 base learners + one LogisticRegression meta-learner" architecture
-    # described in the thesis text. Unconfirmed whether this is intentional (a deeper
-    # ensemble) or a copy/paste bug. Needs a decision before these results are final.
-    # Stacking model with 3-fold cross-validation
-    level1 = StackingClassifier(estimators=level0, final_estimator=level1, cv=3)
+    # Single-layer stacking model with 3-fold cross-validation
     return StackingClassifier(estimators=level0, final_estimator=level1, cv=3)
-    
+
 model = get_advanced_stacking_model()
 
 
