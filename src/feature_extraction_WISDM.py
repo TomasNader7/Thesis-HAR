@@ -177,54 +177,55 @@ def compute_features_for_window(windows):
 
        
        
-    # ============================
-    # PHASE 2: POSTURE FEATURES
-    # ============================
+    if PHASE_TAG == "phase2":
+        # ============================
+        # PHASE 2: POSTURE FEATURES
+        # ============================
 
-    # --- Gravity / orientation ---
-    gx, gy, gz = np.mean(x), np.mean(y), np.mean(z)
-    g_norm = np.sqrt(gx**2 + gy**2 + gz**2) + 1e-12
+        # --- Gravity / orientation ---
+        gx, gy, gz = np.mean(x), np.mean(y), np.mean(z)
+        g_norm = np.sqrt(gx**2 + gy**2 + gz**2) + 1e-12
 
-    ux, uy, uz = gx / g_norm, gy / g_norm, gz / g_norm
+        ux, uy, uz = gx / g_norm, gy / g_norm, gz / g_norm
 
-    features["g_norm"] = g_norm
-    features["g_unit_x"] = ux
-    features["g_unit_y"] = uy
-    features["g_unit_z"] = uz
+        features["g_norm"] = g_norm
+        features["g_unit_x"] = ux
+        features["g_unit_y"] = uy
+        features["g_unit_z"] = uz
 
-    features["tilt_x"] = np.arccos(np.clip(ux, -1.0, 1.0))
-    features["tilt_y"] = np.arccos(np.clip(uy, -1.0, 1.0))
-    features["tilt_z"] = np.arccos(np.clip(uz, -1.0, 1.0))
+        features["tilt_x"] = np.arccos(np.clip(ux, -1.0, 1.0))
+        features["tilt_y"] = np.arccos(np.clip(uy, -1.0, 1.0))
+        features["tilt_z"] = np.arccos(np.clip(uz, -1.0, 1.0))
 
-    # --- Vertical / horizontal decomposition ---
-    a = windows
-    g_unit = np.array([ux, uy, uz])
+        # --- Vertical / horizontal decomposition ---
+        a = windows
+        g_unit = np.array([ux, uy, uz])
 
-    a_vert = a @ g_unit
-    a_horiz = np.sqrt(np.maximum(0.0, np.sum(a*a, axis=1) - a_vert*a_vert))
+        a_vert = a @ g_unit
+        a_horiz = np.sqrt(np.maximum(0.0, np.sum(a*a, axis=1) - a_vert*a_vert))
 
-    features["vert_energy"] = np.mean(a_vert**2)
-    features["vert_std"] = np.std(a_vert)
-    features["horiz_energy"] = np.mean(a_horiz**2)
-    features["vert_horiz_ratio"] = features["vert_energy"] / (features["horiz_energy"] + 1e-12)
+        features["vert_energy"] = np.mean(a_vert**2)
+        features["vert_std"] = np.std(a_vert)
+        features["horiz_energy"] = np.mean(a_horiz**2)
+        features["vert_horiz_ratio"] = features["vert_energy"] / (features["horiz_energy"] + 1e-12)
 
-    # --- Jerk features ---
-    jx = np.diff(x)
-    jy = np.diff(y)
-    jz = np.diff(z)
-    jerk_mag = np.sqrt(jx**2 + jy**2 + jz**2)
+        # --- Jerk features ---
+        jx = np.diff(x)
+        jy = np.diff(y)
+        jz = np.diff(z)
+        jerk_mag = np.sqrt(jx**2 + jy**2 + jz**2)
 
-    features["jerk_mag_mean"] = np.mean(jerk_mag)
-    features["jerk_mag_std"] = np.std(jerk_mag)
-    features["jerk_mag_energy"] = np.mean(jerk_mag**2)
-    features["jerk_mag_max"] = np.max(jerk_mag)
-    features["jerk_mag_iqr"] = np.percentile(jerk_mag, 75) - np.percentile(jerk_mag, 25)
+        features["jerk_mag_mean"] = np.mean(jerk_mag)
+        features["jerk_mag_std"] = np.std(jerk_mag)
+        features["jerk_mag_energy"] = np.mean(jerk_mag**2)
+        features["jerk_mag_max"] = np.max(jerk_mag)
+        features["jerk_mag_iqr"] = np.percentile(jerk_mag, 75) - np.percentile(jerk_mag, 25)
 
-    # Zero-crossing rate (micro-adjustments)
-    features["jerk_zero_crossings_x"] = np.mean(np.diff(np.sign(jx)) != 0)
-    features["jerk_zero_crossings_y"] = np.mean(np.diff(np.sign(jy)) != 0)
-    features["jerk_zero_crossings_z"] = np.mean(np.diff(np.sign(jz)) != 0)   
-    
+        # Zero-crossing rate (micro-adjustments)
+        features["jerk_zero_crossings_x"] = np.mean(np.diff(np.sign(jx)) != 0)
+        features["jerk_zero_crossings_y"] = np.mean(np.diff(np.sign(jy)) != 0)
+        features["jerk_zero_crossings_z"] = np.mean(np.diff(np.sign(jz)) != 0)
+
     # === MAGNITUDE-BASED FEATURES (7 features) ===
     magnitude = np.sqrt(x**2 + y**2 + z**2)
     features['magnitude_mean'] = np.mean(magnitude)
@@ -521,7 +522,7 @@ if __name__ == "__main__":
 
     # Place the raw WISDM dataset (smartphone+smartwatch raw/ folder) here (see README "Data" section).
     raw_folder = str(DATA_DIR / "raw" / "wisdm")
-    output_folder = str(DATA_DIR / "interim" / "wisdm_phase2")
+    output_folder = str(DATA_DIR / "interim" / f"wisdm_{PHASE_TAG}")
 
 
     # Run full pipeline (remove subset_size for complete dataset)

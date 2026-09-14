@@ -448,8 +448,9 @@ if __name__ == "__main__":
 
     # Place the raw UCI HAR dataset here (see README "Data" section).
     UCI_HAR_DIR = str(DATA_DIR / "raw" / "uci_har")
-    # Output of feature_extraction_WISDM.py (phase2 run).
-    WISDM_DIR = str(DATA_DIR / "interim" / "wisdm_phase2")
+    # Output of feature_extraction_WISDM.py. Must match PHASE_TAG (line ~17 in this
+    # file) and the PHASE_TAG that generated data/interim/wisdm_{PHASE_TAG}/.
+    WISDM_DIR = str(DATA_DIR / "interim" / f"wisdm_{PHASE_TAG}")
     OUTPUT_DIR = str(DATA_DIR / "interim" / "Filtered_datasets_and_KS_results")
 
     # ==== PRIMARY: 3-CLASS ANALYSIS ====

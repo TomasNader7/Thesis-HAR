@@ -1,6 +1,6 @@
 Phase: phase1
-HAPT train accuracy: 0.7719
-WISDM test accuracy: 0.3476
+HAPT train accuracy: 0.7010
+WISDM test accuracy: 0.5510
 Train shape: (5502, 61)
 Test shape : (12470, 61)
 WISDM label counts after remap: {1: 4289, 2: 4051, 3: 4130}

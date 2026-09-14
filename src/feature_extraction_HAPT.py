@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 # Reuse exact feature code (critical for alignment)
-from feature_extraction_WISDM import compute_features_for_window
+from feature_extraction_WISDM import compute_features_for_window, PHASE_TAG
 
 
 TARGET_ACTIVITIES = {"WALKING", "SITTING", "STANDING"}
@@ -130,10 +130,11 @@ def extract_hapt_3class_features(
     # Confirm 61 features (excluding metadata)
     metadata_cols = {"activity_uci", "user_id", "exp_id"}
     feature_cols = [c for c in df.columns if c not in metadata_cols]
+    expected = 61 if PHASE_TAG == "phase1" else 80
     print(f"HAPT extracted windows: {len(df):,}")
-    print(f"Feature columns: {len(feature_cols)} (expected: 61)")
-    if len(feature_cols) != 61:
-        print("WARNING: feature count != 61. You may have changed feature logic.")
+    print(f"Feature columns: {len(feature_cols)} (expected: {expected})")
+    if len(feature_cols) != expected:
+        print(f"WARNING: feature count != {expected}. You may have changed feature logic.")
 
     return df
 
@@ -192,7 +193,7 @@ if __name__ == "__main__":
 
     # Place the raw UCI HAPT dataset here (see README "Data" section).
     HAPT_ROOT = str(DATA_DIR / "raw" / "hapt")
-    OUTPUT_DIR = str(DATA_DIR / "interim" / "hapt_3class_output_phase2")
+    OUTPUT_DIR = str(DATA_DIR / "interim" / f"hapt_3class_output_{PHASE_TAG}")
 
     df = extract_hapt_3class_features(HAPT_ROOT, subset_segments=None, window_size=128, overlap=0.5)
     df_norm, _ = normalize_to_minus1_plus1(df)
