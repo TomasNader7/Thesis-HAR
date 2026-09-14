@@ -25,22 +25,23 @@ from xgboost import XGBClassifier
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = REPO_ROOT / "data"
 
-PHASE_TAG = "phase1"  # change to "phase1" when running baseline 80-feature version
+PHASE_TAG = "phase2"  # this script only ever produces 80-feature output (Phase 2 methodology);
+                       # Phase 1's 61-feature extractor code no longer exists in this repo.
 
 RESULTS_DIR = os.path.join("results", PHASE_TAG)
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 LABELS = ["WALKING", "SITTING", "STANDING"]
 
-# Load HAPT (source). Regenerate via src/feature_extraction_HAPT.py (phase1 variant)
-# into data/interim/hapt_3class_output/ before running this script.
-X_train = np.loadtxt(DATA_DIR / "interim" / "hapt_3class_output" / "X_hapt.txt")
-y_train = np.loadtxt(DATA_DIR / "interim" / "hapt_3class_output" / "y_hapt.txt").astype(int)
+# Load HAPT (source). Regenerate via src/feature_extraction_HAPT.py
+# into data/interim/hapt_3class_output_phase2/ before running this script.
+X_train = np.loadtxt(DATA_DIR / "interim" / "hapt_3class_output_phase2" / "X_hapt.txt")
+y_train = np.loadtxt(DATA_DIR / "interim" / "hapt_3class_output_phase2" / "y_hapt.txt").astype(int)
 
 # Load WISDM (target). Regenerate via src/analysis_feature_dataset.py
-# into data/interim/Filtered_datasets_and_KS_results/3class_wisdm/ before running this script.
-X_test = np.loadtxt(DATA_DIR / "interim" / "Filtered_datasets_and_KS_results" / "3class_wisdm" / "X_filtered.txt")
-y_test = np.loadtxt(DATA_DIR / "interim" / "Filtered_datasets_and_KS_results" / "3class_wisdm" / "y_filtered.txt").astype(int)
+# into data/interim/Filtered_datasets_and_KS_results/3class_wisdm_phase2/ before running this script.
+X_test = np.loadtxt(DATA_DIR / "interim" / "Filtered_datasets_and_KS_results" / "3class_wisdm_phase2" / "X_filtered.txt")
+y_test = np.loadtxt(DATA_DIR / "interim" / "Filtered_datasets_and_KS_results" / "3class_wisdm_phase2" / "y_filtered.txt").astype(int)
 
 # --- FIX WISDM LABEL SEMANTICS (CRITICAL) ---
 # WISDM mapping: 1=SITTING, 2=STANDING, 3=WALKING
