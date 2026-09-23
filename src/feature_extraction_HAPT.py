@@ -1,7 +1,9 @@
+import math
 import os
 from pathlib import Path
 import numpy as np
 import pandas as pd
+from scipy.signal import resample_poly
 from sklearn.preprocessing import MinMaxScaler
 
 # Reuse exact feature code (critical for alignment)
@@ -9,6 +11,11 @@ from feature_extraction_WISDM import compute_features_for_window, PHASE_TAG
 
 
 TARGET_ACTIVITIES = {"WALKING", "SITTING", "STANDING"}
+
+# HAPT is recorded at 50Hz, WISDM at 20Hz. Resample HAPT to 20Hz before windowing
+# so 128-sample windows cover the same 6.4s in both datasets.
+HAPT_NATIVE_HZ = 50
+TARGET_HZ = 20
 
 # HAPT (UCI 341) has many "transition" activities (e.g., "SITTING_TO_STANDING")
 def is_transition(name: str) -> bool:
@@ -58,6 +65,16 @@ def read_acc_file(hapt_root: Path, exp_id: int, user_id: int) -> np.ndarray:
     if arr.ndim != 2 or arr.shape[1] != 3:
         raise ValueError(f"Unexpected accel shape in {fpath}: {arr.shape}")
     return arr
+
+
+def resample_segment(segment_xyz: np.ndarray) -> np.ndarray:
+    """
+    Resample one labelled segment from HAPT's native 50Hz to WISDM's 20Hz
+    (ratio 2/5). resample_poly applies an anti-aliasing FIR filter; padtype="mean"
+    avoids edge transients from the ~1g gravity offset.
+    """
+    up, down = TARGET_HZ // math.gcd(TARGET_HZ, HAPT_NATIVE_HZ), HAPT_NATIVE_HZ // math.gcd(TARGET_HZ, HAPT_NATIVE_HZ)
+    return resample_poly(segment_xyz, up, down, axis=0, padtype="mean")
 
 
 def segment_into_windows(signal_xyz: np.ndarray, window_size=128, overlap=0.5) -> list[np.ndarray]:
@@ -110,10 +127,14 @@ def extract_hapt_3class_features(
         # Defensive bounds
         start = max(0, start)
         end = min(len(acc) - 1, end)
-        if end - start + 1 < window_size:
+
+        # Slice at the native rate first so labels stay aligned, then resample
+        # the segment so a 128-sample window spans the same 6.4s as WISDM.
+        segment = acc[start:end + 1]  # inclusive end
+        segment = resample_segment(segment)
+        if len(segment) < window_size:
             continue
 
-        segment = acc[start:end + 1]  # inclusive end
         windows = segment_into_windows(segment, window_size=window_size, overlap=overlap)
 
         for w in windows:

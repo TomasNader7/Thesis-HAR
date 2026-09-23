@@ -55,6 +55,10 @@ your current working directory either way.
    python src/feature_extraction_WISDM.py
    python src/feature_extraction_HAPT.py   # reuses feature code from feature_extraction_WISDM.py
    ```
+   HAPT's raw accelerometer data (50Hz) is resampled to 20Hz per labelled
+   segment (`scipy.signal.resample_poly`, 2/5, anti-aliased) before windowing,
+   so a 128-sample window spans the same 6.4s as WISDM. This yields 1,879 HAPT
+   windows (down from 5,502 at native 50Hz).
 2. **Filtering + initial distribution-shift check** -- filter both datasets
    to the shared activity classes (3-class: WALKING/SITTING/STANDING, or
    6-class) and run an initial Kolmogorov-Smirnov test on raw features.
