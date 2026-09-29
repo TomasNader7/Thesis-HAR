@@ -13,7 +13,7 @@ import os
 # Re-using stacking ensemble model from Human_Activity_Recognition.py
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, StackingClassifier
 from sklearn.svm import SVC
-from sklearn.linear_model import LogisticRegression, Perceptron
+from sklearn.linear_model import LogisticRegression, Perceptron, SGDClassifier
 from xgboost import XGBClassifier
 
 # ==================
@@ -77,7 +77,7 @@ X_test  = scaler.transform(X_test)
 
 def get_advanced_stacking_model():
     level0 = [
-        ('perceptron', Perceptron(max_iter=2000, tol=1e-3)),
+        ('sgd', SGDClassifier(loss='log_loss', max_iter=2000, tol=1e-3, random_state=42)),
         ('random_forest', RandomForestClassifier(n_estimators=20, max_depth=5, random_state=42)),
         ('svm', SVC(kernel='rbf', C=1.0, probability=True, random_state=42, class_weight='balanced')),
         ('xgboost', XGBClassifier(n_estimators=20, learning_rate=0.1, random_state=42)),
