@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 from sklearn.base import clone
+from sklearn.model_selection import StratifiedKFold, cross_val_predict
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.linear_model import LogisticRegression, SGDClassifier
@@ -97,6 +98,12 @@ class FrozenBaseStacking:
     def base_proba_features(self, X):
         return np.hstack([m.predict_proba(X) for _, m in self.fitted_base_])
 
+    def oof_proba_features(self, X, y, n_splits=3, seed=42):
+        # Out-of-fold probas for meta-learner training (same as phase3_domain_adaptation.py).
+        skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+        return np.hstack([cross_val_predict(sk_clone(m), X, y, cv=skf, method="predict_proba")
+                          for _, m in self.base_learners])
+
     def fit_meta(self, X_meta, y_meta):
         self.fitted_meta_ = sk_clone(self.meta_learner).fit(X_meta, y_meta)
         return self
@@ -119,13 +126,13 @@ class FrozenBaseStacking:
 # KNOWN REFERENCE VALUES
 # (from your master table)
 # =========================
-BASELINE_ACC      = 0.4520
-ZSCORE_ACC        = 0.7545
-FT50_ACC          = 0.9881
+BASELINE_ACC      = 0.4082
+ZSCORE_ACC        = 0.7465
+FT50_ACC          = 0.9844
 
-BASELINE_RECALL   = 0.447
-ZSCORE_RECALL     = 0.692
-FT50_RECALL       = 0.989
+BASELINE_RECALL   = 0.284
+ZSCORE_RECALL     = 0.688
+FT50_RECALL       = 0.990
 
 
 # =========================
@@ -164,7 +171,7 @@ def build_learning_curve(X_hapt, y_hapt, X_wisdm, y_wisdm,
 
         model = FrozenBaseStacking(get_base_learners(), get_meta_learner())
         model.fit_base(X_mix, y_mix)
-        model.fit_meta(model.base_proba_features(X_mix), y_mix)
+        model.fit_meta(model.oof_proba_features(X_mix, y_mix), y_mix)
 
         ev = model.evaluate(Xt, y_wisdm)
         results.append((frac * 100, ev["acc"], ev["standing_recall"]))

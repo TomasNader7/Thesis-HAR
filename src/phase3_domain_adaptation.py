@@ -13,6 +13,7 @@ from sklearn.metrics import (
 )
 
 from sklearn.base import clone
+from sklearn.model_selection import StratifiedKFold, cross_val_predict
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression, SGDClassifier
@@ -321,6 +322,16 @@ class FrozenBaseStacking:
             feats.append(m.predict_proba(X))
         return np.hstack(feats)
 
+    def oof_proba_features(self, X, y, n_splits: int = 3, seed: int = 42) -> np.ndarray:
+        """Out-of-fold base-learner probabilities on (X, y), used to train the meta-learner.
+        Matches sklearn StackingClassifier(cv=3): the meta-learner never sees base outputs
+        from data a base learner was fit on. The base learners stay fit on all of (X, y)."""
+        skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+        feats = []
+        for _, m in self.base_learners:
+            feats.append(cross_val_predict(clone(m), X, y, cv=skf, method="predict_proba"))
+        return np.hstack(feats)
+
     def fit_meta(self, X_meta, y_meta):
         self.fitted_meta_ = clone(self.meta_learner)
         self.fitted_meta_.fit(X_meta, y_meta)
@@ -398,7 +409,7 @@ def exp_feature_distribution_alignment(X_hapt, y_hapt, X_wisdm, y_wisdm):
     Xs, Xt = normalize_minmax_source_only(X_hapt, X_wisdm)
 
     modelA = FrozenBaseStacking(base, meta).fit_base(Xs, y_hapt)
-    modelA.fit_meta(modelA.base_proba_features(Xs), y_hapt)
+    modelA.fit_meta(modelA.oof_proba_features(Xs, y_hapt), y_hapt)
 
     train_res = modelA.evaluate(Xs, y_hapt)
     test_res  = modelA.evaluate(Xt, y_wisdm)
@@ -421,7 +432,7 @@ def exp_feature_distribution_alignment(X_hapt, y_hapt, X_wisdm, y_wisdm):
     Xs2, Xt2 = normalize_zscore_per_dataset(X_hapt, X_wisdm)
 
     modelB = FrozenBaseStacking(base, meta).fit_base(Xs2, y_hapt)
-    modelB.fit_meta(modelB.base_proba_features(Xs2), y_hapt)
+    modelB.fit_meta(modelB.oof_proba_features(Xs2, y_hapt), y_hapt)
 
     train_res2 = modelB.evaluate(Xs2, y_hapt)
     test_res2  = modelB.evaluate(Xt2, y_wisdm)
@@ -468,13 +479,14 @@ def exp_meta_learner_adaptation(X_hapt, y_hapt, X_wisdm, y_wisdm,
     model = FrozenBaseStacking(base, meta).fit_base(Xs, y_hapt)
 
     # --- baseline meta (HAPT-only) ---
-    model.fit_meta(model.base_proba_features(Xs), y_hapt)
+    model.fit_meta(model.oof_proba_features(Xs, y_hapt), y_hapt)
     base_test = model.evaluate(Xt, y_wisdm)
     save_metrics(sub, f"baseline_meta_before_adapt_frac{int(wisdm_frac*100)}",
                  model.evaluate(Xs, y_hapt)["acc"], base_test["acc"],
                  base_test["report"], base_test["cm"])
 
     # --- retrain meta on WISDM subset ---
+    # (base learners never saw WISDM, so their probas on this subset are already out-of-sample)
     model.fit_meta(model.base_proba_features(X_ft_n), y_ft)
     after_test  = model.evaluate(Xt, y_wisdm)
     after_train = model.evaluate(Xs, y_hapt)
@@ -522,7 +534,7 @@ def exp_fine_tuning_learning_curve(X_hapt, y_hapt, X_wisdm, y_wisdm,
 
         model = FrozenBaseStacking(get_base_learners(), get_meta_learner())
         model.fit_base(X_mix, y_mix)
-        model.fit_meta(model.base_proba_features(X_mix), y_mix)
+        model.fit_meta(model.oof_proba_features(X_mix, y_mix), y_mix)
 
         train_res = model.evaluate(X_mix, y_mix)
         test_res  = model.evaluate(Xt, y_wisdm)

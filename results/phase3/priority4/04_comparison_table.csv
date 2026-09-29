@@ -1,7 +1,7 @@
 Method,Accuracy (%),Δ vs Baseline (pp),STANDING Recall
-Baseline (Naïve Transfer),45.2,0.0,0.447
-Z-score (Unsupervised),75.45,30.25,0.692
-Fine-Tune 5%,96.18,50.98,0.972
-Fine-Tune 10%,97.61,52.41,0.981
-Fine-Tune 25%,98.55,53.35,0.988
-Fine-Tune 50%,98.81,53.61,0.989
+Baseline (Naïve Transfer),40.82,0.0,0.284
+Z-score (Unsupervised),74.65,33.83,0.688
+Fine-Tune 5%,96.02,55.2,0.971
+Fine-Tune 10%,97.63,56.81,0.981
+Fine-Tune 25%,98.49,57.67,0.987
+Fine-Tune 50%,98.44,57.62,0.99
