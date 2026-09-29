@@ -1,2 +1,2 @@
-Train accuracy: 0.9851
-Test accuracy : 0.9432
+Train accuracy: 0.9764
+Test accuracy : 0.9618

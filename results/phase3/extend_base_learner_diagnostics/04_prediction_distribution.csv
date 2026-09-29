@@ -1,16 +1,16 @@
 Model,Dataset,% WALKING,% SITTING,% STANDING
-SGD,HAPT Train,31.3,37.46,31.24
-SGD,WISDM Naive,6.17,93.83,0.01
-SGD,WISDM Z-score,35.13,39.49,25.37
-SVM,HAPT Train,31.32,34.06,34.62
-SVM,WISDM Naive,6.7,87.16,6.14
-SVM,WISDM Z-score,31.79,31.29,36.92
-Random Forest,HAPT Train,31.3,34.93,33.77
-Random Forest,WISDM Naive,16.8,58.85,24.35
-Random Forest,WISDM Z-score,34.67,32.36,32.98
-Gradient Boosting,HAPT Train,31.3,33.44,35.26
-Gradient Boosting,WISDM Naive,26.01,58.52,15.48
-Gradient Boosting,WISDM Z-score,34.63,33.83,31.55
-XGBoost,HAPT Train,31.3,32.48,36.22
-XGBoost,WISDM Naive,30.5,42.51,26.99
-XGBoost,WISDM Z-score,34.46,29.11,36.43
+SGD,HAPT Train,30.71,39.06,30.23
+SGD,WISDM Naive,4.26,95.74,0.0
+SGD,WISDM Z-score,35.34,34.35,30.31
+SVM,HAPT Train,30.71,33.9,35.39
+SVM,WISDM Naive,2.7,82.62,14.68
+SVM,WISDM Z-score,30.68,34.03,35.28
+Random Forest,HAPT Train,30.71,35.02,34.27
+Random Forest,WISDM Naive,10.87,65.15,23.99
+Random Forest,WISDM Z-score,34.43,35.13,30.44
+Gradient Boosting,HAPT Train,30.71,32.62,36.67
+Gradient Boosting,WISDM Naive,2.95,90.51,6.54
+Gradient Boosting,WISDM Z-score,34.83,34.86,30.31
+XGBoost,HAPT Train,30.71,32.2,37.09
+XGBoost,WISDM Naive,1.07,67.66,31.28
+XGBoost,WISDM Z-score,34.31,29.62,36.07

@@ -223,11 +223,11 @@ def exp_base_learners_zscore(X_hapt, y_hapt, X_wisdm, y_wisdm):
 
     # Naive (MinMax) accuracies from exp_individual_base_learner_eval
     naive_accs = {
-        "sgd":               0.3865,
-        "random_forest":     0.6070,
-        "svm":               0.3934,
-        "xgboost":           0.7427,
-        "gradient_boosting": 0.5755,
+        "sgd":               0.3674,
+        "random_forest":     0.5471,
+        "svm":               0.3865,
+        "xgboost":           0.4565,
+        "gradient_boosting": 0.3536,
     }
 
     Xs, Xt = normalize_zscore_per_dataset(X_hapt, X_wisdm)

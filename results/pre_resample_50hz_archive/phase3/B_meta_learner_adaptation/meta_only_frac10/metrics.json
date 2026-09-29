@@ -1,0 +1,9 @@
+{
+  "method": "Meta-Only Adaptation (10%)",
+  "accuracy": 0.8076182838813152,
+  "macro_f1": 0.8060040547006967,
+  "walking_f1": 0.9806849152743216,
+  "sitting_f1": 0.7332392378263938,
+  "standing_f1": 0.7040880110013752,
+  "standing_recall": 0.6818401937046005
+}

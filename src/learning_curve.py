@@ -119,13 +119,13 @@ class FrozenBaseStacking:
 # KNOWN REFERENCE VALUES
 # (from your master table)
 # =========================
-BASELINE_ACC      = 0.4048
-ZSCORE_ACC        = 0.7279
-FT50_ACC          = 0.9893
+BASELINE_ACC      = 0.4520
+ZSCORE_ACC        = 0.7545
+FT50_ACC          = 0.9881
 
-BASELINE_RECALL   = 0.638
-ZSCORE_RECALL     = 0.644
-FT50_RECALL       = 0.992
+BASELINE_RECALL   = 0.447
+ZSCORE_RECALL     = 0.692
+FT50_RECALL       = 0.989
 
 
 # =========================

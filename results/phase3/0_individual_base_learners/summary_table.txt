@@ -1,7 +1,7 @@
 Base Learner                Train Acc (HAPT)   Test Acc (WISDM)
 ---------------------------------------------------------------
-sgd                                   0.9124             0.3865
-random_forest                         0.9217             0.6070
-svm                                   0.9198             0.3934
-xgboost                               0.9775             0.7427
-gradient_boosting                     0.9387             0.5755
+sgd                                   0.9074             0.3674
+random_forest                         0.9308             0.5471
+svm                                   0.9164             0.3865
+xgboost                               0.9867             0.4565
+gradient_boosting                     0.9558             0.3536

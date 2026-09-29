@@ -1,0 +1,8 @@
+Method,Accuracy (%),Delta Accuracy vs Baseline,Macro F1,WALKING F1,SITTING F1,STANDING F1,STANDING Recall
+Baseline (Naive Transfer),40.48,+0.00,0.391,0.344,0.33,0.5,0.638
+Z-score Normalization,72.79,+32.31,0.722,0.995,0.559,0.613,0.644
+Meta-Only Adaptation (10%),80.76,+40.28,0.806,0.981,0.733,0.704,0.682
+Fine-Tuning (5%),94.32,+53.84,0.942,0.995,0.911,0.92,0.951
+Fine-Tuning (10%),96.58,+56.09,0.965,0.996,0.948,0.952,0.971
+Fine-Tuning (25%),97.87,+57.39,0.978,0.997,0.968,0.97,0.988
+Fine-Tuning (50%),98.93,+58.44,0.989,0.998,0.984,0.985,0.992

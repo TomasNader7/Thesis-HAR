@@ -1,0 +1,9 @@
+{
+  "method": "Z-score Normalization",
+  "accuracy": 0.727906976744186,
+  "macro_f1": 0.7221337288896609,
+  "walking_f1": 0.9946499185857176,
+  "sitting_f1": 0.5591116917047682,
+  "standing_f1": 0.6126395763784966,
+  "standing_recall": 0.6443099273607749
+}

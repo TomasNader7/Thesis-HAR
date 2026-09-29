@@ -1,0 +1,16 @@
+Model,Dataset,Confidence
+SGD,HAPT Train,0.9239
+SGD,WISDM Naive,0.9677
+SGD,WISDM Z-score,0.9466
+SVM,HAPT Train,0.9171
+SVM,WISDM Naive,0.8398
+SVM,WISDM Z-score,0.8511
+Random Forest,HAPT Train,0.9077
+Random Forest,WISDM Naive,0.6246
+Random Forest,WISDM Z-score,0.7834
+Gradient Boosting,HAPT Train,0.8591
+Gradient Boosting,WISDM Naive,0.5681
+Gradient Boosting,WISDM Z-score,0.7687
+XGBoost,HAPT Train,0.8403
+XGBoost,WISDM Naive,0.5337
+XGBoost,WISDM Z-score,0.7459

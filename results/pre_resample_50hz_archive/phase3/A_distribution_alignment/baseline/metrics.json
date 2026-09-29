@@ -1,0 +1,9 @@
+{
+  "method": "Baseline (Naive Transfer)",
+  "accuracy": 0.40481154771451483,
+  "macro_f1": 0.3914082242710404,
+  "walking_f1": 0.3443350704497201,
+  "sitting_f1": 0.33022145028224054,
+  "standing_f1": 0.4996681520811605,
+  "standing_recall": 0.6380145278450363
+}

@@ -2,7 +2,7 @@
 Extended base learner diagnostics 
 
 Produces:
-  results/phase3/Extend Base Learner Diagnostics/
+  results/phase3/extend_base_learner_diagnostics/
     01_master_diagnostic_table.csv
     02_domain_collapse_recovery.csv
     03_perclass_f1_naive.csv
@@ -46,7 +46,7 @@ HAPT_Y_PATH = DATA_DIR / "interim" / "hapt_3class_output_phase2" / "y_hapt.txt"
 WISDM_X_PATH = DATA_DIR / "interim" / "Filtered_datasets_and_KS_results" / "3class_wisdm_phase2" / "X_filtered.txt"
 WISDM_Y_PATH = DATA_DIR / "interim" / "Filtered_datasets_and_KS_results" / "3class_wisdm_phase2" / "y_filtered.txt"
 
-OUT_DIR = os.path.join("results", "phase3", "Extend Base Learner Diagnostics")
+OUT_DIR = os.path.join("results", "phase3", "extend_base_learner_diagnostics")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 
