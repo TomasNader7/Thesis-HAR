@@ -1,0 +1,50 @@
+WISDM: 12470 windows, 51 subjects; holding out 20 per seed
+seed 0 frac 0.05: acc 0.8847 (399 ft windows, 31 subjects)
+seed 0 frac 0.10: acc 0.8903 (798 ft windows, 31 subjects)
+seed 0 frac 0.25: acc 0.8869 (1996 ft windows, 31 subjects)
+seed 0 frac 0.50: acc 0.8876 (3993 ft windows, 31 subjects)
+seed 1 frac 0.05: acc 0.8689 (376 ft windows, 31 subjects)
+seed 1 frac 0.10: acc 0.8543 (752 ft windows, 31 subjects)
+seed 1 frac 0.25: acc 0.8597 (1882 ft windows, 31 subjects)
+seed 1 frac 0.50: acc 0.8660 (3764 ft windows, 31 subjects)
+seed 2 frac 0.05: acc 0.8699 (401 ft windows, 31 subjects)
+seed 2 frac 0.10: acc 0.8987 (802 ft windows, 31 subjects)
+seed 2 frac 0.25: acc 0.8960 (2007 ft windows, 31 subjects)
+seed 2 frac 0.50: acc 0.8987 (4014 ft windows, 31 subjects)
+seed 3 frac 0.05: acc 0.8736 (395 ft windows, 31 subjects)
+seed 3 frac 0.10: acc 0.9093 (790 ft windows, 31 subjects)
+seed 3 frac 0.25: acc 0.8854 (1976 ft windows, 31 subjects)
+seed 3 frac 0.50: acc 0.8903 (3952 ft windows, 31 subjects)
+seed 4 frac 0.05: acc 0.8203 (370 ft windows, 31 subjects)
+seed 4 frac 0.10: acc 0.8891 (741 ft windows, 31 subjects)
+seed 4 frac 0.25: acc 0.8715 (1852 ft windows, 31 subjects)
+seed 4 frac 0.50: acc 0.9049 (3705 ft windows, 31 subjects)
+seed 5 frac 0.05: acc 0.9117 (395 ft windows, 31 subjects)
+seed 5 frac 0.10: acc 0.9225 (791 ft windows, 31 subjects)
+seed 5 frac 0.25: acc 0.9014 (1979 ft windows, 31 subjects)
+seed 5 frac 0.50: acc 0.9110 (3959 ft windows, 31 subjects)
+seed 6 frac 0.05: acc 0.8640 (381 ft windows, 31 subjects)
+seed 6 frac 0.10: acc 0.8681 (763 ft windows, 31 subjects)
+seed 6 frac 0.25: acc 0.8816 (1908 ft windows, 31 subjects)
+seed 6 frac 0.50: acc 0.8656 (3816 ft windows, 31 subjects)
+seed 7 frac 0.05: acc 0.8541 (391 ft windows, 31 subjects)
+seed 7 frac 0.10: acc 0.8727 (783 ft windows, 31 subjects)
+seed 7 frac 0.25: acc 0.8798 (1959 ft windows, 31 subjects)
+seed 7 frac 0.50: acc 0.8845 (3918 ft windows, 31 subjects)
+seed 8 frac 0.05: acc 0.9430 (389 ft windows, 31 subjects)
+seed 8 frac 0.10: acc 0.9548 (778 ft windows, 31 subjects)
+seed 8 frac 0.25: acc 0.9341 (1945 ft windows, 31 subjects)
+seed 8 frac 0.50: acc 0.9234 (3891 ft windows, 31 subjects)
+seed 9 frac 0.05: acc 0.8849 (353 ft windows, 31 subjects)
+seed 9 frac 0.10: acc 0.8826 (707 ft windows, 31 subjects)
+seed 9 frac 0.25: acc 0.8854 (1769 ft windows, 31 subjects)
+seed 9 frac 0.50: acc 0.8826 (3538 ft windows, 31 subjects)
+                     acc         macro_f1         standing_recall        
+                    mean     std     mean     std            mean     std
+method                                                                   
+Baseline (naive)  0.4105  0.0224   0.3318  0.0251          0.3036  0.0320
+Z-score           0.7453  0.0178   0.7364  0.0219          0.7111  0.0565
+Fine-tune 5%      0.8775  0.0329   0.8750  0.0348          0.8251  0.0721
+Fine-tune 10%     0.8942  0.0291   0.8923  0.0299          0.8343  0.0744
+Fine-tune 25%     0.8882  0.0199   0.8858  0.0204          0.8244  0.0809
+Fine-tune 50%     0.8915  0.0185   0.8892  0.0193          0.8211  0.0742
