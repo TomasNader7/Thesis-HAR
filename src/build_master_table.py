@@ -1,4 +1,6 @@
 """
+SUPERSEDED (2026-11-11): the window-level fine-tuning/meta-only experiments leak test subjects into adaptation data. Their old outputs are archived in results/archive_superseded_window_level/ and must not be cited. Use src/subject_wise_finetune.py (results/phase3/D_subject_wise/) instead.
+
 build_master_table.py
 ---------------------
 Run AFTER phase3_domain_adaptation.py.

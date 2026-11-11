@@ -14,7 +14,7 @@ ensemble learning.
 src/        pipeline scripts (run in the order below)
 data/       NOT checked in -- raw + regenerated intermediate data (see "Data")
 results/    small result artifacts (metrics, confusion matrices, reports) for phase1/phase2/phase3
-tables/     master_table.csv -- consolidated phase3 results table
+tables/     (empty; the old master_table.csv was window-level and is archived)
 figures/    KS-statistic distribution-shift plots/tables (phase2)
 reference/  CATA 2025 single-dataset paper code/figures -- background, not part of the pipeline
 ```
@@ -72,8 +72,8 @@ your current working directory either way.
    ```
    python src/cross_dataset_hapt_to_wisdm.py
    ```
-4. **Z-score normalization / distribution alignment, meta-learner
-   adaptation, and fine-tuning** -- the domain-adaptation experiments
+4. **Z-score normalization / distribution alignment (experiment A; experiments B
+   and C, meta-only and fine-tuning, are SUPERSEDED, see step 9)** -- the domain-adaptation experiments
    (naive -> z-score -> meta-only adaptation -> fine-tuning at several
    target-data fractions).
    ```
@@ -84,7 +84,7 @@ your current working directory either way.
    ```
    python src/base_learner_diagnostics.py
    ```
-6. **Fine-tuning learning curve** -- accuracy/recall vs. fraction of target
+6. **(SUPERSEDED, window-level, see step 9) Fine-tuning learning curve** -- accuracy/recall vs. fraction of target
    data used for fine-tuning.
    ```
    python src/learning_curve.py
@@ -94,11 +94,22 @@ your current working directory either way.
    ```
    python src/ks_analysis_phase2.py
    ```
-8. **Consolidated results table** -- run after step 4, scans all
+8. **(SUPERSEDED) Consolidated results table** -- run after step 4, scans all
    `results/phase3/**/metrics.json` and builds one comparison table.
    ```
    python src/build_master_table.py
    ```
+
+9. **Subject-wise adaptation evaluation (used in the thesis)** -- 10 seeds,
+   20 held-out WISDM subjects per seed, adaptation windows only from the other
+   31 subjects; produces meta-only and fine-tune 5/10/25/50% results.
+   ```
+   python src/subject_wise_finetune.py
+   ```
+   The first fine-tuning experiments (steps 4B/4C, 6, 8) drew adaptation windows
+   from all WISDM windows and tested on all WISDM windows, which inflated
+   accuracy (96-98%). Their outputs are kept in
+   `results/archive_superseded_window_level/` for the record only.
 
 `results/phase1/`, `results/phase2/`, and `results/phase3/` in this repo
 already contain the output of a completed run (confusion matrices,

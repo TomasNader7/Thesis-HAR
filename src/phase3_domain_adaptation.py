@@ -456,6 +456,7 @@ def exp_meta_learner_adaptation(X_hapt, y_hapt, X_wisdm, y_wisdm,
     """
     Freeze base learners (trained on HAPT).
     Retrain ONLY the meta-learner on a small WISDM subset.
+    SUPERSEDED: window-level split leaks test subjects; the thesis uses subject_wise_finetune.py.
     Row: Meta-Only Adaptation (10%)
     """
     out_dir = os.path.join(PHASE3_DIR, "B_meta_learner_adaptation")
@@ -509,6 +510,7 @@ def exp_fine_tuning_learning_curve(X_hapt, y_hapt, X_wisdm, y_wisdm,
                                    fracs=(0.05, 0.10, 0.25, 0.50), seed=42):
     """
     Retrain the full ensemble on HAPT + X% of WISDM.
+    SUPERSEDED: window-level split leaks test subjects; the thesis uses subject_wise_finetune.py.
     Rows: Fine-Tuning (5%), Fine-Tuning (10%), Fine-Tuning (25%), Fine-Tuning (50%)
     """
     out_dir = os.path.join(PHASE3_DIR, "C_finetune_learning_curve")
